@@ -11,31 +11,24 @@
           <div class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
             <p>Upload your QR code.</p>
             <p>All the processing is done in your browser, so your key's safe. You can even use me in Airplane mode.</p>
-            <qrcode-capture :capture="false" @decode="onDecode" />
+            <qrcode-capture :capture="false" @detect="onDetect" />
           </div>
           <div class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7" v-if="done">
             <ul class="list-disc space-y-2">
-              <li class="flex items-start">
+              <li class="flex items-start" v-for="attr in attrs" :key="attr.desc">
                 <span class="h-6 flex items-center sm:h-7">
                   <svg class="flex-shrink-0 h-5 w-5 text-cyan-500" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                   </svg>
                 </span>
                 <p class="ml-2">
-                  Device UUID: <code class="text-sm font-bold text-gray-900">{{ uuid }}</code>
-                </p>
-              </li>
-              <li class="flex items-start">
-                <span class="h-6 flex items-center sm:h-7">
-                  <svg class="flex-shrink-0 h-5 w-5 text-cyan-500" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                  </svg>
-                </span>
-                <p class="ml-2">
-                  Secret Key: <code class="text-sm font-bold text-gray-900">{{ secret }}</code>
+                  {{ attr.desc }}: <code class="break-all text-sm font-bold text-gray-900">{{ attr.value }}</code>
                 </p>
               </li>
             </ul>
+          </div>
+          <div class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7" v-if="error">
+            <p>Something wrong while decoding the QR code.</p>
           </div>
         </div>
       </div>
@@ -51,28 +44,89 @@
         return {
           secret: '',
           uuid: '',
-          done: false
+          attrs: [],
+          done: false,
+          error: false
         }
       },
       methods: {
-        onDecode(result) {
-          const urlParams = new URLSearchParams(result);
-          const sk = urlParams.get('sk');
-          const data = base64.base64ToBytes(sk);
+        async onDetect (promise) {
+          this.done = false;
+          this.error = false;
+          this.attrs = [];
 
-          this.secret = Buffer.from(data.slice(1,17)).toString("hex");
+          try {
+            const {
+              imageData,    // raw image data of image/frame
+              content,      // decoded String or null
+              location      // QR code coordinates or null
+            } = await promise
 
-          const uuid = Buffer.from(data.slice(83,99)).toString("hex");
-          const lengths = [8,4,4,4,12];
-          let parts = [];
-          let range = 0;
-          for (var i = 0; i < lengths.length; i++) {
-              parts.push(uuid.slice(range,range+lengths[i]).toUpperCase());
-              range += lengths[i];
-          };
-          this.uuid = parts.join('-');
+            if (content === null) {
+              this.done = false;
+              this.error = true;
+              return;
+            } else {
+              const urlParams = new URLSearchParams(content);
+              const sk = urlParams.get('sk');
+              const data = base64.base64ToBytes(sk);
 
-          this.done = true
+              this.attrs.push({
+                'desc': 'Name',
+                'value':  urlParams.get('n')
+              });
+
+              const product = (()=>
+                {
+                  switch(data.slice(0,1)[0]) {
+                    case 0: return "SESAME 3";
+                    case 1: return  "Wi-Fi Module 2";
+                    case 2: return "SESAME bot";
+                    case 3: return "SESAME Cycle";
+                    default: return "Unknown";
+                  }
+                }
+              )();
+              this.attrs.push({'desc': 'Product', 'value': product});
+
+              const uuid = Buffer.from(data.slice(83,99)).toString("hex");
+              const lengths = [8,4,4,4,12];
+              let parts = [];
+              let range = 0;
+              for (var i = 0; i < lengths.length; i++) {
+                  parts.push(uuid.slice(range,range+lengths[i]).toUpperCase());
+                  range += lengths[i];
+              };
+              this.attrs.push({
+                'desc': 'UUID',
+                'value': parts.join('-')
+              });
+
+              this.attrs.push({
+                'desc': 'Key Index',
+                'value': Buffer.from(data.slice(82,83)).toString("hex")
+              });
+
+              this.attrs.push({
+                'desc': 'Secret Key',
+                'value': Buffer.from(data.slice(1,17)).toString("hex")
+              });
+
+              this.attrs.push({
+                'desc': 'Public Key',
+                'value': Buffer.from(data.slice(17,81)).toString("hex")
+              });
+
+
+
+              this.done = true;
+              this.error = false;
+            }
+          } catch(e) {
+            console.log(e);
+            this.done = false;
+            this.error = true;
+          }
         },
       }
     }
