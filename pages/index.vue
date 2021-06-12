@@ -9,7 +9,8 @@
             <h1>QR Code Reader for SESAME</h1>
           </div>
           <div class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
-            <p>Upload your QR code. All the processing, including image processing, is done in your browser, so your key's safe. You can even use me in Airplane mode.</p>
+            <p>Upload your QR code.</p>
+            <p>All the processing is done in your browser, so your key's safe. You can even use me in Airplane mode.</p>
             <qrcode-capture @decode="onDecode" />
           </div>
           <div class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7" v-if="done">
@@ -21,7 +22,7 @@
                   </svg>
                 </span>
                 <p class="ml-2">
-                Secret Key: <code class="text-sm font-bold text-gray-900">{{ secret }}</code>
+                  Device UUID: <code class="text-sm font-bold text-gray-900">{{ uuid }}</code>
                 </p>
               </li>
               <li class="flex items-start">
@@ -31,7 +32,7 @@
                   </svg>
                 </span>
                 <p class="ml-2">
-                  Device UUID: <code class="text-sm font-bold text-gray-900">{{ uuid }}</code>
+                  Secret Key: <code class="text-sm font-bold text-gray-900">{{ secret }}</code>
                 </p>
               </li>
             </ul>
