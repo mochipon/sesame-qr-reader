@@ -9,7 +9,7 @@
             <h1>QR Code Reader for SESAME</h1>
           </div>
           <div class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
-            <p>Upload your QR code.</p>
+            <p>Upload your QR code and get the private key and other information contained in it.</p>
             <p>All the processing is done in your browser, so your key's safe. You can even use me in Airplane mode.</p>
             <qrcode-capture :capture="false" @detect="onDetect" />
           </div>
