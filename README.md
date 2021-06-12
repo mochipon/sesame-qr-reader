@@ -1,8 +1,14 @@
-# sesame-qr-reader
+# [QR Code Reader for SESAME smart locks](https://sesame-qr-reader.vercel.app/)
 
-> QR Code Reader for SESAME
+![Vercel](http://therealsujitk-vercel-badge.vercel.app/?app=therealsujitk-vercel-badge)
+![License](https://img.shields.io/badge/license-MIT-blue)
 
-## Build Setup
+
+Using the official app from CANDY HOUSE, you can share keys via QR code. This tool is designed to read the QR code and display the information contained in it. 
+
+All the processing is done on the client side, to make sure that the keys are not exposed.
+
+## For Local Build
 
 ```bash
 # install dependencies
