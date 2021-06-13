@@ -102,6 +102,20 @@
                 'value': parts.join('-')
               });
 
+              const shareLevel = (()=>
+                {
+                  switch(parseInt(urlParams.get('l'))) {
+                    case 1: return  "1 (Manager Key)";
+                    case 2: return "2 (Guest Key)";
+                    default: return "Unknown";
+                  }
+                }
+              )();
+              this.attrs.push({
+                'desc': 'Key Level',
+                'value':  shareLevel
+              });
+
               this.attrs.push({
                 'desc': 'Key Index',
                 'value': Buffer.from(data.slice(82,83)).toString("hex")
