@@ -105,6 +105,7 @@
               const shareLevel = (()=>
                 {
                   switch(parseInt(urlParams.get('l'))) {
+                    case 0: return  "0 (Owner Key)";
                     case 1: return  "1 (Manager Key)";
                     case 2: return "2 (Guest Key)";
                     default: return "Unknown";
