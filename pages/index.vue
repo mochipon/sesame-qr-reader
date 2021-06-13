@@ -42,8 +42,6 @@
     export default {
       data() {
         return {
-          secret: '',
-          uuid: '',
           attrs: [],
           done: false,
           error: false
