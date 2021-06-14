@@ -66,7 +66,7 @@
               return;
             } else {
               const urlParams = new URLSearchParams(content);
-              const sk = urlParams.get('sk');
+              const sk = urlParams.get('sk').replace(/ /g, '+');
               const data = base64.base64ToBytes(sk);
 
               this.attrs.push({
@@ -129,8 +129,6 @@
                 'desc': 'Public Key',
                 'value': Buffer.from(data.slice(17,81)).toString("hex")
               });
-
-
 
               this.done = true;
               this.error = false;
