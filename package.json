@@ -13,7 +13,7 @@
   "dependencies": {
     "byte-base64": "^1.1.0",
     "nuxt": "^2.15.7",
-    "vue-qrcode-reader": "^3.0.2"
+    "vue-qrcode-reader": "^3.0.3"
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^4.1.3",
