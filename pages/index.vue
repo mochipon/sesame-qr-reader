@@ -117,7 +117,7 @@
 
               this.attrs.push({
                 'desc': 'Key Index',
-                'value': Buffer.from(data.slice(82,83)).toString("hex")
+                'value': Buffer.from(data.slice(81,83)).toString("hex")
               });
 
               this.attrs.push({
