@@ -78,9 +78,10 @@
                 {
                   switch(data.slice(0,1)[0]) {
                     case 0: return "SESAME 3";
-                    case 1: return  "Wi-Fi Module 2";
+                    case 1: return "Wi-Fi Module 2";
                     case 2: return "SESAME bot";
                     case 3: return "SESAME Cycle";
+                    case 4: return "SESAME 4";
                     default: return "Unknown";
                   }
                 }
