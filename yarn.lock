@@ -8379,10 +8379,10 @@ vue-no-ssr@^1.1.1:
   resolved "https://registry.yarnpkg.com/vue-no-ssr/-/vue-no-ssr-1.1.1.tgz#875f3be6fb0ae41568a837f3ac1a80eaa137b998"
   integrity sha512-ZMjqRpWabMPqPc7gIrG0Nw6vRf1+itwf0Itft7LbMXs2g3Zs/NFmevjZGN1x7K3Q95GmIjWbQZTVerxiBxI+0g==
 
-vue-qrcode-reader@^3.0.3:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/vue-qrcode-reader/-/vue-qrcode-reader-3.0.3.tgz#8bc92257361f61f951ef89ae098f5ad0d383faa1"
-  integrity sha512-mDcDiZRpTkOY1jF9OxLvpynsiDvZ+/uNmlNs62rusLQqZ7J+q3fhlBAENQy8o2Imhw8y2MLfFfG35z8zA8NgEw==
+vue-qrcode-reader@^3.0.5:
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/vue-qrcode-reader/-/vue-qrcode-reader-3.0.5.tgz#225e07737b28f6af048df4bda05b27ff974536f8"
+  integrity sha512-8ixhYMyuvY1d2s6SNKjrCcOjc22ppnys9spI4ixAgxlFuDDNo3eFwkVsJuABKM4Jn7HYLvyeegk+nxlv0ZQSyw==
   dependencies:
     barcode-detector "^1.0.0"
     callforth "^0.3.1"
